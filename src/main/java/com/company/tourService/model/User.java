@@ -32,4 +32,5 @@ public class User extends BaseEntity {
     private List<Role> roles;
 
 
+
 }

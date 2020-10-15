@@ -2,6 +2,7 @@ package com.company.tourService.security.jwt;
 
 import com.company.tourService.model.Role;
 
+import com.company.tourService.security.JwtUserDetailsService;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,7 +31,7 @@ public class JwtTokenProvider {
     private long tokenExpired;
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private JwtUserDetailsService userDetailsService;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
