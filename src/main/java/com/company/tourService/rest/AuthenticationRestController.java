@@ -21,11 +21,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/api/page/auth/")
+@RequestMapping(value = "/api/v1/auth/")
 public class AuthenticationRestController {
 
     private final AuthenticationManager authenticationManager;
+
     private final JwtTokenProvider jwtTokenProvider;
+
     private final UserService userService;
 
     @Autowired

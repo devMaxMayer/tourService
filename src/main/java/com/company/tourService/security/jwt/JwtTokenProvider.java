@@ -28,10 +28,11 @@ public class JwtTokenProvider {
     private String secret;
 
     @Value("${jwt.token.expired}")
-    private long tokenExpired;
+    private long validityInMilliseconds;
+
 
     @Autowired
-    private JwtUserDetailsService userDetailsService;
+    private UserDetailsService userDetailsService;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -50,7 +51,7 @@ public class JwtTokenProvider {
         claims.put("roles", getRoleNames(roles));
 
         Date now = new Date();
-        Date validity = new Date(now.getTime() + tokenExpired);
+        Date validity = new Date(now.getTime() + validityInMilliseconds);
 
         return Jwts.builder()//
                 .setClaims(claims)//
@@ -100,5 +101,4 @@ public class JwtTokenProvider {
 
         return result;
     }
-
 }

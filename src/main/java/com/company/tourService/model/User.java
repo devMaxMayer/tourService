@@ -14,10 +14,10 @@ public class User extends BaseEntity {
     private String username;
 
     @Column(name = "first_name")
-    private String firstname;
+    private String firstName;
 
     @Column(name = "last_name")
-    private String lastname;
+    private String lastName;
 
     @Column(name = "email")
     private String email;
@@ -25,12 +25,9 @@ public class User extends BaseEntity {
     @Column(name = "password")
     private String password;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
-    joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-    inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     private List<Role> roles;
-
-
-
 }
