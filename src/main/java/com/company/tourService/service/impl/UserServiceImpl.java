@@ -3,8 +3,8 @@ package com.company.tourService.service.impl;
 import com.company.tourService.model.Role;
 import com.company.tourService.model.Status;
 import com.company.tourService.model.User;
-import com.company.tourService.repos.RoleRepos;
-import com.company.tourService.repos.UserRepos;
+import com.company.tourService.repos.RoleRepository;
+import com.company.tourService.repos.UserRepository;
 import com.company.tourService.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,20 +18,20 @@ import java.util.List;
 @Slf4j
 public class UserServiceImpl implements UserService {
 
-    private final UserRepos userRepos;
-    private final RoleRepos roleRepos;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepos userRepos, RoleRepos roleRepos, BCryptPasswordEncoder passwordEncoder) {
-        this.userRepos = userRepos;
-        this.roleRepos = roleRepos;
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public User register(User user) {
-        Role roleUser = roleRepos.findByName("ROLE_USER");
+        Role roleUser = roleRepository.findByName("ROLE_USER");
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(roleUser);
 
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
         user.setRoles(userRoles);
         user.setStatus(Status.ACTIVE);
 
-        User registeredUser = userRepos.save(user);
+        User registeredUser = userRepository.save(user);
 
         log.info("IN register - user: {} successfully registered", registeredUser);
 
@@ -48,21 +48,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAll() {
-        List<User> result = userRepos.findAll();
+        List<User> result = userRepository.findAll();
         log.info("IN getAll - {} users found", result.size());
         return result;
     }
 
     @Override
     public User findByUsername(String username) {
-        User result = userRepos.findByUsername(username);
+        User result = userRepository.findByUsername(username);
         log.info("IN findByUsername - user: {} found by username: {}", result, username);
         return result;
     }
 
     @Override
     public User findById(Long id) {
-        User result = userRepos.findById(id).orElse(null);
+        User result = userRepository.findById(id).orElse(null);
 
         if (result == null) {
             log.warn("IN findById - no user found by id: {}", id);
@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(Long id) {
-        userRepos.deleteById(id);
+        userRepository.deleteById(id);
         log.info("IN delete - user with id: {} successfully deleted");
     }
 }

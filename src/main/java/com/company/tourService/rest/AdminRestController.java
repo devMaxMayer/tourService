@@ -1,7 +1,6 @@
 package com.company.tourService.rest;
 
 import com.company.tourService.dto.AdminUserDto;
-import com.company.tourService.dto.UserDto;
 import com.company.tourService.model.User;
 import com.company.tourService.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
